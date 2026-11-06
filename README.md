@@ -2,7 +2,7 @@
 
 A full-stack, subscription-based platform that teaches users how to build their own browser-based software tools — replacing expensive monthly subscriptions with skills they own forever. 
 
-**Live Demo:** [Add your Vercel Link Here]
+🔗 **Live Demo:** [https://buildwithzeno.vercel.app](https://buildwithzeno.vercel.app)
 
 ## 🚀 The Problem & The Solution
 Big tech charges users monthly fees for simple tools (note-taking, basic design, file converters) that a browser can already do for free. **Build with Zeno** solves this by providing step-by-step guides, downloadable tools, and a private community for people who want to build their own software and own it forever.
@@ -37,4 +37,4 @@ The platform uses Firebase for backend services. Firestore Security Rules are im
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/build-with-zeno.git
+   git clone https://github.com/uchihazeno06-pixel/build_with_zeno.git
