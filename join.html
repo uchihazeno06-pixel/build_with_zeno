@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join — Build with Zeno</title>
+<meta name="description" content="Create your Build with Zeno account.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body data-page="join">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <h1>Create your account</h1>
+    <p class="lede">Sign up first. Then you'll see payment instructions.</p>
+  </div>
+
+  <section>
+    <div class="wrap two-col">
+
+      <div>
+        <form class="stack" id="join-form">
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password">
+            <span class="hint">At least 6 characters.</span>
+          </div>
+          <div class="field">
+            <label for="plan">Plan</label>
+            <select id="plan" name="plan">
+              <option value="pro">Pro — ₦1,500/month</option>
+              <option value="vip">VIP — ₦4,000/month</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="months">Months you want to pay for</label>
+            <select id="months" name="months">
+              <option value="1">1 month</option>
+              <option value="3">3 months</option>
+              <option value="6">6 months</option>
+              <option value="12">12 months</option>
+            </select>
+          </div>
+
+          <div class="order-summary" id="order-summary">
+            <div class="row"><span>Plan</span><span id="sum-plan">Pro</span></div>
+            <div class="row"><span>Duration</span><span id="sum-months">1 month</span></div>
+            <div class="row total"><span>Total to pay</span><span id="sum-total">₦1,500</span></div>
+          </div>
+
+         <div class="field" style="flex-direction:row; align-items:flex-start; gap:10px;">
+  <input type="checkbox" id="agree" name="agree" required style="width:auto; margin-top:4px;">
+  <label for="agree" style="font-weight:400; font-size:0.9rem; line-height:1.5;">
+    I have read and agree to the <a href="terms.html" target="_blank">Terms of Use</a>. I understand my email (and phone number, if provided) is stored, and that my number is visible to other members if I join the WhatsApp community.
+  </label>
+</div>
+<button type="submit" class="btn btn-primary btn-block" id="join-submit" disabled>Create account</button>
+          <p class="form-msg" id="join-msg"></p>
+          <p class="small">Already have an account? <a href="login.html">Sign in</a>.</p>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h3 class="mt-0">Why you're signing up first</h3>
+        <p class="small">Since automatic payment isn't set up yet, the flow is manual: you create your account, then transfer the amount shown to my bank. I activate your plan within 24 hours.</p>
+        <p class="small">Nothing is charged without you doing it yourself.</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
