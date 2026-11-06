@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Custom Build — Build with Zeno</title>
+<meta name="description" content="Request a custom tool built for your specific need.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body data-page="requests">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <span class="kicker mono">Private requests</span>
+    <h1>Need something specific built?</h1>
+    <p class="lede">If there's no guide for it yet, tell me what you need and I'll look at building it.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div id="request-gate"></div>
+      <form class="stack" id="request-form">
+        <div class="field">
+          <label for="r-name">Name</label>
+          <input type="text" id="r-name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="r-email">Email</label>
+          <input type="email" id="r-email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="r-need">What do you need built?</label>
+          <textarea id="r-need" name="need" required placeholder="Describe the tool or the subscription you want to replace."></textarea>
+        </div>
+        <div class="field">
+          <label for="r-budget">Budget</label>
+          <input type="text" id="r-budget" name="budget" placeholder="e.g. ₦20,000" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send request</button>
+        <p class="form-msg" id="request-msg"></p>
+        <p class="small">VIP members get priority on new tool requests.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
