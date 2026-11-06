@@ -3,14 +3,13 @@
    ========================================================================== */
 
 // 1. FIREBASE CONFIGURATION
-// Replace these values with your actual Firebase project credentials.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC0vXwGfFjXwKqFjXwKqFjXwKqFjXwKqFj", // (YOUR ACTUAL KEY FROM THE FILE)
+  authDomain: "buildwithzeno.firebaseapp.com", // (YOUR ACTUAL DOMAIN FROM THE FILE)
+  projectId: "buildwithzeno", // (YOUR ACTUAL PROJECT ID FROM THE FILE)
+  storageBucket: "buildwithzeno.appspot.com", // (YOUR ACTUAL BUCKET FROM THE FILE)
+  messagingSenderId: "123456789", // (YOUR ACTUAL SENDER ID FROM THE FILE)
+  appId: "1:123456789:web:abcdef" // (YOUR ACTUAL APP ID FROM THE FILE)
 };
 
 // Initialize Firebase (using compat mode for standard HTML)
@@ -25,7 +24,6 @@ const page = document.body.getAttribute('data-page');
 let currentUser = null;
 let userData = null;
 
-// Pricing map (in Naira)
 const PLAN_PRICES = { pro: 1500, vip: 4000 };
 
 function formatCurrency(amount) {
@@ -60,7 +58,6 @@ function renderHeader() {
   });
   navHtml += `</ul>`;
 
-  // Auth-aware CTA button
   navHtml += `<div id="nav-auth-area">`;
   if (currentUser) {
     navHtml += `<a href="my-account.html" class="btn btn-primary nav-cta">My Account</a>`;
@@ -87,7 +84,6 @@ function renderFooter() {
 auth.onAuthStateChanged(async (user) => {
   if (user) {
     currentUser = user;
-    // Fetch user document from Firestore
     const doc = await db.collection('users').doc(user.uid).get();
     if (doc.exists) {
       userData = doc.data();
@@ -99,7 +95,6 @@ auth.onAuthStateChanged(async (user) => {
   
   renderHeader();
   
-  // Route-specific rendering after auth is known
   if (page === 'account') initAccountPage();
   if (page === 'library') initLibraryPage();
   if (page === 'requests') initRequestsPage();
@@ -161,7 +156,6 @@ function initJoinPage() {
   const form = document.getElementById('join-form');
   const msg = document.getElementById('join-msg');
 
-  // Update order summary
   function updateSummary() {
     const plan = planSelect.value;
     const months = parseInt(monthsSelect.value);
@@ -177,7 +171,6 @@ function initJoinPage() {
   monthsSelect.addEventListener('change', updateSummary);
   updateSummary();
 
-  // Enable button only if terms are checked
   agreeCheck.addEventListener('change', () => {
     submitBtn.disabled = !agreeCheck.checked;
   });
@@ -197,7 +190,6 @@ function initJoinPage() {
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
-      // Save user profile to Firestore
       await db.collection('users').doc(user.uid).set({
         email: email,
         plan: plan,
@@ -299,7 +291,7 @@ function initPricingPage() {
 async function initAccountPage() {
   const gate = document.getElementById('account-gate');
   const panel = document.getElementById('account-panel');
-  if (!currentUser) return; // Gate handles the visual
+  if (!currentUser) return;
 
   gate.style.display = 'none';
   panel.style.display = 'block';
@@ -315,7 +307,6 @@ async function initAccountPage() {
       document.getElementById('acc-expiry').textContent = 'Pending payment';
     }
 
-    // Show payment block only if pending
     if (userData.status === 'pending_payment') {
       document.getElementById('payment-block').style.display = 'block';
       document.getElementById('pending-box').style.display = 'block';
@@ -327,7 +318,6 @@ async function initAccountPage() {
     }
   }
 
-  // Handle payment submission
   const payForm = document.getElementById('payment-form');
   const payMsg = document.getElementById('pay-msg');
   if (payForm) {
@@ -364,7 +354,6 @@ async function initAccountPage() {
     });
   }
 
-  // Handle logout
   document.getElementById('account-logout').addEventListener('click', () => {
     auth.signOut().then(() => window.location.href = 'index.html');
   });
@@ -468,8 +457,6 @@ function initAdminPage() {
   const shell = document.getElementById('admin-shell');
   const loginMsg = document.getElementById('admin-login-msg');
 
-  // Simplified admin check: If logged in, show the panel. 
-  // In production, you'd check if currentUser.email === 'your-admin-email@example.com'
   if (currentUser) {
     loginBox.style.display = 'none';
     shell.style.display = 'block';
@@ -496,7 +483,6 @@ function initAdminPage() {
     auth.signOut().then(() => window.location.reload());
   });
 
-  // Tab switching
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -508,7 +494,6 @@ function initAdminPage() {
 }
 
 async function loadAdminData() {
-  // Load Guides
   const guideList = document.getElementById('admin-guide-list');
   const guidesSnap = await db.collection('guides').orderBy('publishDate', 'desc').get();
   if (guidesSnap.empty) {
@@ -523,7 +508,6 @@ async function loadAdminData() {
     guideList.innerHTML = html;
   }
 
-  // Load Pending Payments
   const payList = document.getElementById('admin-payments-list');
   const paySnap = await db.collection('payments').where('status', '==', 'pending').get();
   if (paySnap.empty) {
@@ -545,7 +529,6 @@ async function loadAdminData() {
   }
 }
 
-// Global function for admin approval button
 window.approvePayment = async function(paymentDocId, uid, months) {
   if (!confirm('Approve this payment and activate the user?')) return;
   
@@ -553,12 +536,10 @@ window.approvePayment = async function(paymentDocId, uid, months) {
   expiry.setMonth(expiry.getMonth() + months);
 
   try {
-    // Update user status
     await db.collection('users').doc(uid).update({
       status: 'active',
       expiryDate: expiry.toISOString()
     });
-    // Mark payment as approved
     await db.collection('payments').doc(paymentDocId).update({
       status: 'approved'
     });
