@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Build with Zeno</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body data-page="admin">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <span class="kicker mono">admin</span>
+    <h1>Admin panel</h1>
+    <p class="lede">Manage guides, read submissions, and set member plans.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+
+      <div class="admin-login" id="admin-login">
+        <form class="stack" id="admin-login-form">
+          <div class="field">
+            <label for="a-email">Email</label>
+            <input type="email" id="a-email" name="email" required autocomplete="username">
+          </div>
+          <div class="field">
+            <label for="a-password">Password</label>
+            <input type="password" id="a-password" name="password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+          <p class="form-msg" id="admin-login-msg"></p>
+        </form>
+      </div>
+
+      <div class="admin-shell" id="admin-shell">
+        <div class="admin-topbar">
+          <p class="small mt-0">Signed in as <span class="mono" id="admin-whoami"></span></p>
+          <button class="btn btn-ghost" id="admin-logout">Sign out</button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="tab-guides">Guides</button>
+          <button class="tab-btn" data-tab="tab-feedback">Feedback</button>
+          <button class="tab-btn" data-tab="tab-requests">Private requests</button>
+          <button class="tab-btn" data-tab="tab-users">Users</button>
+          <button class="tab-btn" data-tab="tab-payments">Payments</button>
+        </div>
+
+        <!-- Guides -->
+        <div class="tab-panel active" id="tab-guides">
+          <h2>Add / edit a guide</h2>
+          <form class="stack" id="admin-guide-form" style="max-width:100%;">
+            <div class="field">
+              <label for="g-title">Title</label>
+              <input type="text" id="g-title" name="title" required>
+            </div>
+            <div class="field">
+              <label for="g-description">Short description</label>
+              <input type="text" id="g-description" name="description" required>
+              <span class="hint">Shown on guide cards — keep it to one sentence.</span>
+            </div>
+
+            <div class="editor-split">
+              <div class="editor-pane">
+                <label for="g-content">Guide content (HTML or plain text)</label>
+                <textarea id="g-content" name="content" rows="20" required></textarea>
+
+                <div class="editor-toolbar">
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="h2">H2</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="h3">H3</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="p">Paragraph</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="tip">Tip</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="warning">Warning</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="step">Step</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="code">Code block</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="quote">Quote</button>
+                  <button type="button" class="btn btn-ghost btn-small" data-insert="ul">Bullet list</button>
+                </div>
+              </div>
+
+              <div class="editor-pane">
+                <label>Live preview</label>
+                <div class="preview-pane">
+                  <div id="g-preview" class="guide-body"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:16px;">
+              <label for="g-publishDate">Publish date</label>
+              <input type="date" id="g-publishDate" name="publishDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Publish guide</button>
+            <p class="form-msg" id="admin-guide-msg"></p>
+          </form>
+
+          <hr class="divider">
+          <h2>Published guides</h2>
+          <div id="admin-guide-list"><p class="small">Loading…</p></div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="tab-panel" id="tab-feedback">
+          <h2>Feedback from the contact form</h2>
+          <div id="admin-feedback-list"><p class="small">Loading…</p></div>
+        </div>
+
+        <!-- Requests -->
+        <div class="tab-panel" id="tab-requests">
+          <h2>Private build requests</h2>
+          <div id="admin-requests-list"><p class="small">Loading…</p></div>
+        </div>
+
+        <!-- Users -->
+        <div class="tab-panel" id="tab-users">
+          <h2>Members and plans</h2>
+          <p class="small">Set a member's plan and the number of months they get. Expiry is calculated automatically from today.</p>
+          <table class="data">
+            <thead>
+              <tr><th>Email</th><th>Plan</th><th>Months from today</th><th>Expires</th><th></th></tr>
+            </thead>
+            <tbody id="admin-users-body">
+              <tr><td colspan="5" class="small">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Payments -->
+        <div class="tab-panel" id="tab-payments">
+          <h2>Pending payments</h2>
+          <p class="small">Approve to activate the user's plan for the months they paid for.</p>
+          <div id="admin-payments-list"><p class="small">Loading…</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
