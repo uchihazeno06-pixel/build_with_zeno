@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Build with Zeno</title>
+<meta name="description" content="Get in touch with Build with Zeno by WhatsApp, email, or the form below.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body data-page="contact">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <h1>Get in touch</h1>
+    <p class="lede">Questions before you join, or anything else — reach me directly.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="wa-box">
+        <span class="glyph">✆</span>
+        <div class="txt">
+          <h3>WhatsApp</h3>
+          <p class="small mt-0">Fastest way to reach me — <a href="https://wa.me/2347030246351" target="_blank" rel="noopener">wa.me/2347030246351</a></p>
+        </div>
+      </div>
+
+      <div class="wa-box" style="margin-top:16px;">
+        <span class="glyph">✉</span>
+        <div class="txt">
+          <h3>Email</h3>
+          <p class="small mt-0"><a href="mailto:buildwithzeno@outlook.com">buildwithzeno@outlook.com</a></p>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-head">
+        <span class="kicker mono">or write here</span>
+        <h2>Send a message</h2>
+      </div>
+      <div id="feedback-gate"></div>
+      <form class="stack" id="feedback-form">
+        <div class="field">
+          <label for="c-name">Name</label>
+          <input type="text" id="c-name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send message</button>
+        <p class="form-msg" id="feedback-msg"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
