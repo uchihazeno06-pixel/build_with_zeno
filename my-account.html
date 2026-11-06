@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — Build with Zeno</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body data-page="account">
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="wrap page-head">
+    <h1>My Account</h1>
+    <p class="lede">Your plan, your payment details, your sign-out.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div id="account-gate">
+        <div class="empty-state">
+          <span class="glyph">◈</span>
+          <h3>Not signed in</h3>
+          <p>Sign in to see your account.</p>
+          <a href="login.html" class="btn btn-primary" style="margin-top:16px;">Sign in</a>
+        </div>
+      </div>
+
+      <div id="account-panel" style="display:none;">
+        <div class="panel" style="max-width:560px;">
+
+          <h3 class="mt-0">Account details</h3>
+          <div class="link-row">
+            <span class="glyph">✉</span>
+            <div>
+              <strong>Email</strong><br>
+              <span class="small" id="acc-email">—</span>
+            </div>
+          </div>
+          <div class="link-row">
+            <span class="glyph">◆</span>
+            <div>
+              <strong>Current plan</strong><br>
+              <span class="small" id="acc-plan">—</span>
+            </div>
+          </div>
+          <div class="link-row">
+            <span class="glyph">◷</span>
+            <div>
+              <strong>Access until</strong><br>
+              <span class="small" id="acc-expiry">—</span>
+            </div>
+          </div>
+          <div class="link-row">
+            <span class="glyph">▤</span>
+            <div>
+              <strong>My Library</strong><br>
+              <a href="library.html" class="text-link">Open library</a>
+            </div>
+          </div>
+          <div class="link-row">
+            <span class="glyph">◈</span>
+            <div>
+              <strong>Community</strong><br>
+              <a href="community.html" class="text-link">Open WhatsApp group</a>
+            </div>
+          </div>
+
+          <div id="payment-block" style="display:none;">
+            <hr class="divider">
+
+            <div id="pending-box" style="display:none;">
+              <div class="form-msg show ok" style="margin-bottom:16px;">
+                Your payment hasn't been confirmed yet. Fill the form below and your plan activates within 24 hours.
+              </div>
+            </div>
+
+            <div id="expiry-warning" style="display:none;">
+              <div class="form-msg show err" style="margin-bottom:16px;">
+                Your plan expires soon. Renew now to keep access to My Library and the community.
+              </div>
+            </div>
+
+            <h3>Payment details</h3>
+            <p class="small">Transfer the amount for your plan to the account below, then fill the form at the bottom.</p>
+
+            <div class="link-row">
+              <span class="glyph">₦</span>
+              <div>
+                <strong>Bank</strong><br>
+                <span class="small">Moniepoint</span>
+              </div>
+            </div>
+            <div class="link-row">
+              <span class="glyph">#</span>
+              <div>
+                <strong>Account number</strong><br>
+                <span class="small" style="font-size:1.05rem; letter-spacing:1px;">9078964414</span>
+              </div>
+            </div>
+            <div class="link-row">
+              <span class="glyph">◈</span>
+              <div>
+                <strong>Account name</strong><br>
+                <span class="small">IJOMAH OKWUCHUKWU EMMANUEL</span>
+              </div>
+            </div>
+            <div class="link-row">
+              <span class="glyph">✆</span>
+              <div>
+                <strong>After paying</strong><br>
+                <span class="small">Fill the form below so I can confirm and activate your plan.</span>
+              </div>
+            </div>
+
+            <hr class="divider">
+            <h3>Confirm your payment</h3>
+            <p class="small">After transferring, fill this so I can confirm and activate your plan.</p>
+
+            <form class="stack" id="payment-form">
+              <div class="field">
+                <label for="pay-amount">Amount you sent (₦)</label>
+                <input type="number" id="pay-amount" required min="500">
+              </div>
+              <div class="field">
+                <label for="pay-bank">Bank you sent from</label>
+                <input type="text" id="pay-bank" required placeholder="e.g. GTBank">
+              </div>
+              <div class="field">
+                <label for="pay-reference">Transfer reference / session ID</label>
+                <input type="text" id="pay-reference" required placeholder="From your bank alert">
+              </div>
+              <div class="field">
+                <label for="pay-plan">Plan you're paying for</label>
+                <select id="pay-plan">
+                  <option value="pro">Pro</option>
+                  <option value="vip">VIP</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pay-months">Months</label>
+                <select id="pay-months">
+                  <option value="1">1</option>
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Submit payment details</button>
+              <p class="form-msg" id="pay-msg"></p>
+            </form>
+
+            <hr class="divider">
+            <a href="pricing.html" class="btn btn-ghost btn-block">See plans</a>
+          </div>
+
+          <hr class="divider">
+          <button class="btn btn-ghost btn-block" id="account-logout">Sign out</button>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
